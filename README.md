@@ -125,6 +125,11 @@ tail -n 5 /home/vboxuser/log_project/logs/login_failed.log
 
 ## 3. 실행 예시
 
+### 기존 auth.log 파일 내용
+<img width="1592" height="642" alt="image" src="https://github.com/user-attachments/assets/9894e3bf-c545-403c-82fc-e5d277bfe09a" />
+
+
+
 ### 로그인 실패 로그 (`login_failed.log`)
 
 ```
@@ -133,6 +138,9 @@ Timestamp,Host,Process,User,IP,Reason
 2025-09-05T09:13:48.938786+09:00,myserver00,sshd[385093]:,ubuntu,10.0.2.2,invalid user
 
 ```
+<img width="881" height="180" alt="image" src="https://github.com/user-attachments/assets/96a73e7a-cf62-479a-929f-ff908e93ea63" />
+
+
 
 ### 로그인 성공 로그 (`login_success.log`)
 
@@ -141,25 +149,57 @@ Timestamp,Host,Process,User,IP,Method
 2025-09-05T11:36:54.343709+09:00,myserver00,sshd[433690]:,ubuntu,::1,password
 
 ```
+<img width="856" height="140" alt="image" src="https://github.com/user-attachments/assets/f7ba9f5c-b265-4a95-a2c8-f29f3a92a2aa" />
+
+## 4. fail2ban 설치
+```
+sudo apt update
+sudo apt install -y fail2ban
+```
+
+### fail2ban 구성 파일 생성 (jail.local)
+```
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo nano /etc/fail2ban/jail.local
+```
+### fail2ban 구성 파일 설정
+
+```
+[sshd]
+enabled = true          # SSH 감시 활성화
+port    = ssh           # SSH 포트 (다른 포트를 쓰면 수정)
+filter  = sshd
+logpath = /var/log/auth.log
+maxretry = 5            # 허용 실패 횟수
+bantime  = 600          # 차단 시간 (초) → 600초 = 10분
+findtime = 600          # 실패 누적 카운트 유지 시간
+```
+
+### 테스트
+---
+<img width="424" height="280" alt="image" src="https://github.com/user-attachments/assets/0f4ab679-1821-44d3-bf52-6bec8357d4c2" />
+
+
+### 실제 ban 모습 확인
+
+<img width="645" height="176" alt="image" src="https://github.com/user-attachments/assets/e1fb05a1-2aa8-47ca-8462-db8e5e04ec25" />
+
 
 ---
 
-## 4. 향후 계획
+## 5. 향후 계획
 
 - **일일 리포트 자동 생성**
     - 실패 TOP 10 IP / 지역
     - 성공 사용자 TOP 10
     - 인증 방식 비율
-- **보안 자동화 (fail2ban 연계)**
-    - 반복된 비밀번호 실패 발생 시 자동 차단
-    - 예시: 5회 이상 실패 → 10분간 IP 차단
-    - `fail2ban`의 `jail.local`과 sshd jail 설정을 연계해 실시간 대응 가능
+
 - **시각화**
     - `.log` 파일을 기반으로 Excel, Grafana 등으로 대시보드 구현
 
 ---
 
-## 5. 학습 포인트
+## 6. 학습 포인트
 
 - 리눅스 보안 로그(`/var/log/auth.log`) 구조 이해
 - `awk`를 활용한 텍스트 로그 파싱 및 가공
