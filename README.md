@@ -1,13 +1,13 @@
 # 👥 팀원 소개
 
-| 이름 | GitHub |
-|------|---------|
-| 황지환 | [![황지환](https://github.com/jihwan77.png?size=100)](https://github.com/jihwan77) |
-| 이영주 | [![이영주](https://github.com/0-zoo.png?size=100)]([https://github.com/0-zoo]) |
+| 황지환 | 이영주 |
+|--------|--------|
+| [![황지환](https://github.com/jihwan77.png?size=100)](https://github.com/jihwan77) | [![이영주](https://github.com/0-zoo.png?size=100)](https://github.com/0-zoo) |
 
 > 👉 각 이미지 클릭 시 해당 팀원의 GitHub 프로필로 이동합니다.
 
 ---
+
 
 # 🔍 Linux SSH Log Analysis & Automation
 
