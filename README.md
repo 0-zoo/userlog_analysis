@@ -161,7 +161,7 @@ awk '
 
 ---
 
-## 3. 실행 예시
+## 6. 실행 예시
 
 ### 기존 auth.log 파일 내용
 <img width="1592" height="642" alt="image" src="https://github.com/user-attachments/assets/9894e3bf-c545-403c-82fc-e5d277bfe09a" />
@@ -210,7 +210,9 @@ Timestamp,Host,Process,User,IP,Method
 
 ## 7. 보안 강화 (fail2ban 적용)
 
-로그 분석만으로는 공격 시도를 "탐지"하는 데에 그치지만, **fail2ban**을 적용하면 공격 IP를 자동으로 차단하여 실시간 방어가 가능합니다.
+Fail2ban은 반복적인 로그인 실패를 탐지해 공격 IP를 방화벽 규칙에 추가, 일정 시간 차단하는 침입 방지 도구(IPS)입니다.
+
+단순 로그 분석과 달리 실시간 자동 차단으로 방어가 가능합니다.
 
 ### 설치
 
@@ -226,7 +228,7 @@ sudo apt install -y fail2ban
 
 ### SSH 감시 설정 (`/etc/fail2ban/jail.local`)
 
-설정 파일을 복사 후 편집합니다:
+업데이트에도 덮어씌워지지 않고, 내 커스텀 설정만 안전하게 적용하기 위해 설정 파일을 복사 후 편집합니다:
 
 ```bash
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
@@ -247,8 +249,7 @@ bantime  = 600           # 600초(10분) 동안 IP 차단
 findtime = 600           # 600초(10분) 안에서 누적 실패 횟수 계산
 
 ```
-### 테스트
-로그인 실패 IP 차단 태스트
+## 8. 로그인 실패 IP 차단 시나리오  
 ---
 <img width="424" height="280" alt="image" src="https://github.com/user-attachments/assets/0f4ab679-1821-44d3-bf52-6bec8357d4c2" />
 
@@ -272,12 +273,12 @@ sudo fail2ban-client status sshd
 → 현재 차단된 IP 목록과 차단 횟수를 확인할 수 있습니다.
 
 ---
-
+### 결론 
 👉 이처럼 `fail2ban`은 본 시스템에서 단순 모니터링을 넘어, 탐지(Detection) → 대응(Response)까지 자동화하는 보안 체계의 핵심 도구로 활용됩니다. 이를 통해 관리자는 자동 방어 체계로 서버를 보다 안정적으로 운영이 가능해집니다.
 
 ---
 
-## 8. 향후 계획
+## 9. 향후 계획
 
 본 프로젝트는 현재 SSH 로그인 로그를 **수집·분석 → 자동화 → 보안 강화**까지 구축한 상태입니다. 앞으로는 다음과 같은 방향으로 고도화를 진행할 예정입니다.
 
@@ -318,7 +319,7 @@ sudo fail2ban-client status sshd
 
 ---
 
-## 9. 최적화 서버 운영을 위한 고찰
+## 10. 최적화 서버 운영을 위한 고찰
 
 이번 프로젝트는 단순히 SSH 로그인 로그를 수집하는 수준을 넘어, **자동화와 보안 강화를 결합한 운영 관리 모델**을 실습하는 데 목적이 있었습니다.
 
