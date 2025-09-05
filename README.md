@@ -175,6 +175,16 @@ bantime  = 600          # 차단 시간 (초) → 600초 = 10분
 findtime = 600          # 실패 누적 카운트 유지 시간
 ```
 
+### 테스트
+---
+<img width="424" height="280" alt="image" src="https://github.com/user-attachments/assets/0f4ab679-1821-44d3-bf52-6bec8357d4c2" />
+
+
+### 실제 ban 모습 확인
+
+<img width="645" height="176" alt="image" src="https://github.com/user-attachments/assets/e1fb05a1-2aa8-47ca-8462-db8e5e04ec25" />
+
+
 ---
 
 ## 5. 향후 계획
